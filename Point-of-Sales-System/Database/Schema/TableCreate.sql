@@ -1,0 +1,5 @@
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY AUTO_INCREMENT
+);
+
+USE POS_database;
