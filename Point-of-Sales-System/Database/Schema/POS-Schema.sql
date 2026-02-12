@@ -1,0 +1,1 @@
+CREATE SCHEMA POS_Database;
