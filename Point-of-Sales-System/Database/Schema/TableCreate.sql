@@ -10,7 +10,7 @@ CREATE TABLE Customers (
 	CustomerID INT PRIMARY KEY AUTO_INCREMENT,
 	FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
-    PhoneNum decimal(10, 2)
+    PhoneNum VARCHAR(15)
 	
 );
 
