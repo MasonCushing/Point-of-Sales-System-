@@ -1,5 +1,27 @@
-CREATE TABLE Employees (
-    EmployeeID INT PRIMARY KEY AUTO_INCREMENT
+CREATE TABLE PAYROLLS (
+    EmployeeID INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) UNIQUE,
+    Salary decimal(10, 2) CHECK (Salary >= 0 )
 );
 
+CREATE TABLE Customers (
+	CustomerID INT PRIMARY KEY AUTO_INCREMENT,
+	FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    PhoneNum decimal(10, 2)
+	
+);
+
+CREATE TABLE Orders(
+	OrderID INT PRIMARY KEY AUTO_INCREMENT,
+    CustomerID INT NOT NULL,
+    OrderTime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    OrderItems VARCHAR(50) NOT NULL,
+    State VARCHAR(50) NOT NULL DEFAULT 'Pending',
+    TotalCost  DECIMAL(10,2) NOT NULL,
+    CONSTRAINT FKcustomer FOREIGN KEY  (CustomerID) REFERENCES Customers(CustomerID)
+    
+);
 USE POS_database;
