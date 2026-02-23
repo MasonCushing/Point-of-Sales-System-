@@ -3,6 +3,7 @@ CREATE TABLE PAYROLLS (
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
     Email VARCHAR(50) UNIQUE,
+    Job VARCHAR(50) NOT NULL,
     Salary decimal(10, 2) CHECK (Salary >= 0 )
 );
 
@@ -24,4 +25,31 @@ CREATE TABLE Orders(
     CONSTRAINT FKcustomer FOREIGN KEY  (CustomerID) REFERENCES Customers(CustomerID)
     
 );
+
+CREATE TABLE MenuItems(
+ItemID INT AUTO_INCREMENT PRIMARY KEY,
+ItemName VARCHAR(50) NOT NULL,
+ItemPrice DECIMAL(8,2) NOT NULL,
+Catergory VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE OrderItems(
+OrderItemID INT PRIMARY KEY AUTO_INCREMENT,
+OrderID INT NOT NULL,
+ItemID INT NOT NULL,
+Quantity INT NOT NULL DEFAULT 1,
+PriceEach DECIMAL(8,2) NOT NULL,
+CONSTRAINT FKorder FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+CONSTRAINT FKmenuitem FOREIGN KEY (ItemID) REFERENCES MenuItems(ItemID)
+);
+
+CREATE TABLE Reservations(
+ReservationID INT PRIMARY KEY AUTO_INCREMENT,
+CustomerName VARCHAR(100) NOT NULL,
+CustomerPhone VARCHAR(15),
+ReservationTime DATETIME NOT NULL,
+TableNumber INT,
+Status VARCHAR(20) DEFAULT 'Booked'
+);
+
 USE POS_database;
