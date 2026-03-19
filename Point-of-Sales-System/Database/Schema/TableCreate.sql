@@ -11,7 +11,7 @@ CREATE TABLE Customers (
 	CustomerID INT PRIMARY KEY AUTO_INCREMENT,
 	FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
-    PhoneNum VARCHAR(15)
+    PhoneNum decimal(10, 2)
 	
 );
 
@@ -19,6 +19,7 @@ CREATE TABLE Orders(
 	OrderID INT PRIMARY KEY AUTO_INCREMENT,
     CustomerID INT NOT NULL,
     OrderTime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    OrderItems VARCHAR(50) NOT NULL,
     State VARCHAR(50) NOT NULL DEFAULT 'Pending',
     TotalCost  DECIMAL(10,2) NOT NULL,
     CONSTRAINT FKcustomer FOREIGN KEY  (CustomerID) REFERENCES Customers(CustomerID)
@@ -42,13 +43,18 @@ CONSTRAINT FKorder FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
 CONSTRAINT FKmenuitem FOREIGN KEY (ItemID) REFERENCES MenuItems(ItemID)
 );
 
-CREATE TABLE Reservations(
-ReservationID INT PRIMARY KEY AUTO_INCREMENT,
-CustomerName VARCHAR(100) NOT NULL,
-CustomerPhone VARCHAR(15),
-ReservationTime DATETIME NOT NULL,
-TableNumber INT,
-Status VARCHAR(20) DEFAULT 'Booked'
+CREATE TABLE Reservations (
+    ReservationID INT PRIMARY KEY AUTO_INCREMENT,
+    CustomerID INT NOT NULL,
+    EmployeeID INT,
+    CustomerPhone VARCHAR(15),
+    ReservationTime DATETIME NOT NULL,
+    TableNumber INT,
+    Status VARCHAR(20) DEFAULT 'Booked',
+    CONSTRAINT FKreservation_customer
+	FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    CONSTRAINT FKreservation_employee
+	FOREIGN KEY (EmployeeID) REFERENCES PAYROLLS(EmployeeID)
 );
 
 INSERT INTO PAYROLLS (FirstName, LastName, Email, Job, Salary) VALUES
