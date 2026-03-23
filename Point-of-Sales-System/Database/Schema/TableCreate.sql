@@ -94,4 +94,52 @@ INSERT INTO Reservations (CustomerName, CustomerPhone, ReservationTime, TableNum
 ('Ashley Williams', '8645555678', '2026-02-25 19:30:00', 3, 'Seated'),
 ('David Lee', '8645559012', '2026-02-26 17:45:00', 2, 'Cancelled');
 
+ALTER TABLE PAYROLLS
+MODIFY Email VARCHAR(50) NOT NULL;
+ALTER TABLE PAYROLLS
+MODIFY Job ENUM('Manager', 'Cashier', 'Cook', 'Server') NOT NULL;
+
 USE POS_database;
+
+ALTER TABLE Customers
+ADD CONSTRAINT unique_phone UNIQUE(PhoneNum);
+
+ALTER TABLE Orders
+DROP FOREIGN KEY FKcustomer;
+ALTER TABLE Orders
+ADD CONSTRAINT FKcustomer
+FOREIGN KEY(CustomerID) REFERENCES Customers(CustomerID)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+ALTER TABLE Orders
+MODIFY State ENUM('Pending', 'Completed', 'Cancelled') NOT NULL DEFAULT 'Pending';
+ALTER TABLE Orders
+ADD CONSTRAINT chkTotalCost CHECK (TotalCost >=0);
+
+ALTER TABLE MenuItems
+ADD CONSTRAINT uniqueItemName UNIQUE (ItemName);
+ALTER TABLE menuItems
+MODIFY Catergory ENUM('Main', 'Side', 'Drink', 'Dessert') NOT NULL;
+ALTER TABLE menuItems
+ADD CONSTRAINT chkItemPrice CHECK (ItemPrice > 0);
+
+ALTER TABLE OrderItems
+DROP foreign key FKorder;
+ALTER TABLE OrderItems
+ADD constraint FKOrder
+foreign key (OrderID) references Orders(OrderID)
+ON DELETE Cascade;
+alter table OrderItems
+drop foreign key FKmenuitem;
+Alter table OrderItems
+ADD Constraint FKmenuitem
+FOREIGN KEY (ItemID) REFERENCES MenuItems(ItemID)
+ON DELETE CASCADE;
+ALTER Table OrderItems
+Add constraint chkquantity Check (Quantity > 0);
+
+Alter Table Reservations
+MODIFY Status ENUM('Booked', 'Seated', 'Cancelled') default 'Booked';
+alter table Reservations
+ADD constraint chktablenum CHECK (TableNumber between 1 and 20);
+
